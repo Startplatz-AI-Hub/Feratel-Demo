@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feratel Kamera-Statistik Bericht Generator</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    
+    <!-- Feratel Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <span>Feratel Media Technologies AG - Kamera Statistik Generator</span>
+    </div>
+
+    <div class="main-nav">
+        <div class="container">
+            <div class="logo-container">
+                <img class="logo" src="https://www.feratel.com/typo3conf/ext/icc_template/Resources/Public/Img/logo-feratel.svg" alt="Feratel Logo" />
+                <div class="tagline">Advanced Analytics & Business Intelligence</div>
+            </div>
+            <div class="nav-title">Kamera-Statistik Bericht Generator</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="upload-section">
+            <h2 class="section-title">JSON-Datei hochladen</h2>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">JSON-Datei hier ablegen oder klicken zum Auswählen</div>
+                <div class="upload-subtext">Unterstützte Formate: .json (max. 10 MB)</div>
+                <input type="file" id="fileInput" class="file-input" accept=".json" />
+            </div>
+            
+            <div class="file-info" id="fileInfo">
+                <strong>Datei geladen:</strong> <span id="fileName"></span><br>
+                <strong>Größe:</strong> <span id="fileSize"></span><br>
+                <strong>Kameras:</strong> <span id="cameraCount"></span>
+            </div>
+
+            <div class="error" id="errorMessage"></div>
+            <div class="success" id="successMessage"></div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Bericht wird generiert...</div>
+        </div>
+
+        <div class="report-section" id="reportSection">
+            <div class="report-header">
+                <div class="report-title" id="reportTitle">Kamera-Statistik Bericht</div>
+                <div class="report-meta" id="reportMeta"></div>
+            </div>
+
+            <div class="report-content" id="reportContent">
+                <!-- Hier wird der generierte Bericht eingefügt -->
+            </div>
+            
+            <div class="actions">
+                <button class="btn" id="downloadBtn" onclick="downloadReport()">
+                    📥 Bericht als HTML herunterladen
+                </button>
+                <button class="btn btn-secondary" id="newReportBtn" onclick="resetForm()" style="margin-left: 10px;">
+                    🔄 Neuen Bericht erstellen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 - feratel media technologies AG - Kamera-Statistik Bericht Generator</p>
+        <p>Entwickelt nach dem Feratel Corporate Design Style Guide</p>
+    </div>
+
+    <!-- Configuration & Prompts -->
+    <script src="config.js"></script>
+    
+    <!-- Main Application -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+# FERATEL KAMERA-STATISTIK - KI PROMPTS
+# Version 2.0 - Alle verwendeten AI-Prompts für Team-Review
+# Generiert am: 16.09.2025
+
+================================================================================
+1. MANAGEMENT SUMMARY PROMPT
+================================================================================
+
+Funktion: generateComprehensiveSummary()
+Zweck: Erstellt die Executive Summary basierend auf allen anderen Analysen
+Tokens: 200
+
+PROMPT:
+-------
+Du bist ein Datenanalyst bei Feratel. Erstelle eine Executive Summary basierend auf folgenden bereits analysierten Daten:
+
+HAUPTMETRIKEN:
+- Zeitraum: [DYNAMISCH: data.ms bis data.me]
+- Video-Abrufe gesamt: [DYNAMISCH: formatNumber(metrics.totalVideoAbrufe)]
+- Impressions gesamt: [DYNAMISCH: formatNumber(metrics.totalImpressions)]
+- Klickrate: [DYNAMISCH: Prozentberechnung]
+
+BEREITS ANALYSIERTE INSIGHTS:
+- Länder: [DYNAMISCH: allInsights.countries]
+- Saisonalität: [DYNAMISCH: allInsights.seasonal]
+- Kanäle: [DYNAMISCH: allInsights.channels]
+
+AUFGABE:
+Erstelle eine KURZE Management Summary mit MAXIMAL 3 kurzen Absätzen:
+
+Absatz 1 (2-3 Sätze): Gesamtperformance mit den wichtigsten Zahlen
+Absatz 2 (2-3 Sätze): Haupterkenntnisse (Märkte, Saisonalität, Kanäle)  
+Absatz 3 (2-3 Sätze): Die 2-3 wichtigsten Handlungsempfehlungen
+
+WICHTIG:
+- KURZ und PRÄGNANT (maximal 150 Wörter gesamt!)
+- Klare Absätze mit Zeilenumbrüchen
+- Keine verschachtelten Sätze
+- Vermeide Prozentzeichen in Fließtext (schreibe "Prozent")
+- Auf Deutsch
+
+================================================================================
+2. EINZELKAMERA ANALYSE PROMPT
+================================================================================
+
+Funktion: generateCameraInsight()
+Zweck: Analysiert die Performance einzelner Kameras
+Tokens: 250
+
+PROMPT:
+-------
+Analysiere diese Kamera-Performance sachlich und vollständig:
+
+KAMERA: [DYNAMISCH: report.line1 - report.line2]
+- Video-Abrufe: [DYNAMISCH: formatNumber(totalVideoAbrufe)]
+- Impressions: [DYNAMISCH: formatNumber(totalImpressions)]
+- Klickrate: [DYNAMISCH: Prozentberechnung]
+
+Erkläre in 3-4 vollständigen Sätzen:
+1. Was die Zahlen konkret bedeuten (gut/mittel/schwach)
+2. Was die Klickrate über das Nutzerinteresse aussagt
+3. Welche Trends oder Muster erkennbar sind
+4. Einen konkreten Verbesserungsvorschlag
+
+Wichtig: Vollständige Sätze, keine Abkürzungen. Direkt und sachlich. Deutsch.
+
+================================================================================
+3. LÄNDER-ANALYSE PROMPT
+================================================================================
+
+Funktion: generateCountryInsights()
+Zweck: Analysiert die geografische Verteilung der Besucher
+Tokens: 120
+
+PROMPT:
+-------
+Analysiere die Länder-Verteilung sachlich:
+
+TOP-MÄRKTE: [DYNAMISCH: topCountries Liste]
+
+Erkläre direkt:
+- Was die Länder-Verteilung zeigt
+- Welche Marktmuster erkennbar sind
+- Wo Expansion sinnvoll wäre
+
+2-3 Sätze, sachlich, ohne Verkaufs-Sprache. Deutsch.
+
+================================================================================
+4. SAISONALE ANALYSE PROMPT
+================================================================================
+
+Funktion: generateSeasonalInsights()
+Zweck: Analysiert saisonale Trends und Peak-Zeiten
+Tokens: 120
+
+PROMPT:
+-------
+Analysiere die saisonalen Daten sachlich:
+
+PEAK-MONATE: [DYNAMISCH: peaks Liste oder 'Keine klaren Peaks']
+VARIANZ: [DYNAMISCH: seasonalData.totalMonths] Monate Daten
+
+Erkläre direkt:
+- Was die saisonalen Muster zeigen
+- Warum bestimmte Monate stärker sind
+- Welche Schlüsse daraus zu ziehen sind
+
+2-3 Sätze, analytisch, ohne Empfehlungs-Floskeln. Deutsch.
+
+================================================================================
+5. KANAL-ANALYSE PROMPT
+================================================================================
+
+Funktion: generateChannelInsights()
+Zweck: Analysiert die Performance verschiedener Traffic-Kanäle
+Tokens: 120
+
+PROMPT:
+-------
+Analysiere die Kanal-Performance sachlich:
+
+KANÄLE: [DYNAMISCH: channels mit Prozentangaben]
+
+Erkläre direkt:
+- Was die Verteilung bedeutet
+- Welcher Kanal am stärksten performt
+- Was die Unterschiede verursacht
+
+2-3 Sätze, analytisch, ohne Marketing-Sprache. Deutsch.
+
+================================================================================
+6. LEGACY PROMPT (NICHT MEHR VERWENDET)
+================================================================================
+
+Funktion: generateAISummary() - NUR NOCH FALLBACK
+Zweck: Alte Summary-Funktion, wird nur als Fallback verwendet
+Status: DEPRECATED - wird durch generateComprehensiveSummary ersetzt
+
+PROMPT:
+-------
+Erkläre diese Kamera-Performance in einfachen Worten für einen Kunden:
+
+IHRE KAMERA-DATEN:
+- Zeitraum: [DYNAMISCH]
+- Video-Abrufe: [DYNAMISCH]
+- Impressions: [DYNAMISCH]
+- Hauptmärkte: [DYNAMISCH]
+
+Erkläre verständlich:
+1. Was diese Zahlen für den Kunden bedeuten
+2. Ob die Performance gut oder schlecht ist
+3. Was die Besucher-Muster zeigen
+4. Einfache Handlungsempfehlungen
+
+Schreibstil: Einfach, verständlich, wie für Nicht-Techniker. Keine Fachbegriffe ohne Erklärung. Deutsch.
+
+================================================================================
+WICHTIGE HINWEISE FÜR DAS TEAM:
+================================================================================
+
+1. REIHENFOLGE DER GENERIERUNG:
+   - Zuerst: Einzelkamera-Analysen (Prompt 2)
+   - Dann: Länder-, Saison-, Kanal-Analysen (Prompts 3-5)
+   - Zuletzt: Management Summary (Prompt 1) - verwendet Ergebnisse der anderen
+
+2. TOKEN-LIMITS:
+   - Management Summary: 200 Tokens (kurz und prägnant)
+   - Einzelkamera: 250 Tokens (detaillierter)
+   - Andere Analysen: 120 Tokens (kurz und sachlich)
+
+3. FALLBACK-STRATEGIEN:
+   - Jeder Prompt hat statische Fallback-Texte
+   - Bei API-Fehlern werden diese verwendet
+   - Fallbacks sind ebenfalls datenbasiert
+
+4. SPRACH-RICHTLINIEN:
+   - Immer auf Deutsch
+   - Sachlich, nicht verkäuferisch
+   - Keine Fachbegriffe ohne Erklärung
+   - "Prozent" statt "%" in Fließtext
+
+5. QUALITÄTSKONTROLLE:
+   - Antworten werden auf Vollständigkeit geprüft
+   - Zu kurze Antworten triggern Fallback
+   - Retry-Mechanismus bei unvollständigen Antworten
+
+================================================================================
+LETZTE AKTUALISIERUNG: 16.09.2025
+ERSTELLT FÜR: Team-Review und Prompt-Optimierung
+================================================================================
