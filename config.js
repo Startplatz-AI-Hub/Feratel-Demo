@@ -7,7 +7,7 @@ const config = {
     USE_API: 'openai', // 'openai' oder 'gemini'
     
     // OpenAI Configuration
-    OPENAI_API_KEY: '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',
+    OPENAI_API_KEY: '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',
     OPENAI_MODEL: 'gpt-4o-mini',
     
     // Google Gemini Configuration (Alternative)
