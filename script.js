@@ -997,13 +997,24 @@ let currentData = null;
             const chartElement = document.getElementById('overview-total-chart');
             if (!chartElement) return;
             
-            // Sammle alle monatlichen Gesamt-Abrufe
+            // KORRIGIERT: Sammle monatliche Gesamt-Abrufe mit Duplikat-Kontrolle
             const monthlyData = {};
+            const processedKeys = new Set(); // Vermeide Duplikate
+            
             data.reports.forEach(report => {
-                const totalData = report.datalist.find(d => d.key.includes('Gesamt') && !d.key.includes('Video'));
-                if (totalData) {
-                    const month = report.m;
-                    monthlyData[month] = (monthlyData[month] || 0) + totalData.values.reduce((sum, v) => sum + v.v, 0);
+                const key = `${report.cam}-${report.m}`;
+                
+                // Nur wenn wir diese Kamera-Monat Kombination noch nicht haben
+                if (!processedKeys.has(key)) {
+                    processedKeys.add(key);
+                    
+                    // Verwende AbrufeMonatGesamt für korrekte aktuelle Monatswerte
+                    const totalData = report.datalist.find(d => d.key === 'AbrufeMonatGesamt');
+                    if (totalData) {
+                        const month = report.m;
+                        const monthTotal = totalData.values.reduce((sum, v) => sum + v.v, 0);
+                        monthlyData[month] = (monthlyData[month] || 0) + monthTotal;
+                    }
                 }
             });
             
@@ -1083,13 +1094,24 @@ let currentData = null;
             const chartElement = document.getElementById('overview-video-chart');
             if (!chartElement) return;
             
-            // Sammle alle monatlichen Video-Abrufe
+            // KORRIGIERT: Sammle monatliche Video-Abrufe mit Duplikat-Kontrolle
             const monthlyData = {};
+            const processedKeys = new Set(); // Vermeide Duplikate
+            
             data.reports.forEach(report => {
-                const videoData = report.datalist.find(d => d.key.includes('Video'));
-                if (videoData) {
-                    const month = report.m;
-                    monthlyData[month] = (monthlyData[month] || 0) + videoData.values.reduce((sum, v) => sum + v.v, 0);
+                const key = `${report.cam}-${report.m}`;
+                
+                // Nur wenn wir diese Kamera-Monat Kombination noch nicht haben
+                if (!processedKeys.has(key)) {
+                    processedKeys.add(key);
+                    
+                    // Verwende AbrufeMonatVideo für korrekte aktuelle Monatswerte
+                    const videoData = report.datalist.find(d => d.key === 'AbrufeMonatVideo');
+                    if (videoData) {
+                        const month = report.m;
+                        const monthTotal = videoData.values.reduce((sum, v) => sum + v.v, 0);
+                        monthlyData[month] = (monthlyData[month] || 0) + monthTotal;
+                    }
                 }
             });
             
